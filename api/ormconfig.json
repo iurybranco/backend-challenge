@@ -1,0 +1,16 @@
+{
+  "type": "mongodb",
+  "host": "localhost",
+  "database": "challenge",
+  "username": "root",
+  "port": 27017,
+  "password": "dummyPass",
+  "timezone": "Z",
+  "entities": [
+    "./src/database/models/*.ts"
+  ],
+  "extra": {
+    "authSource": "admin",
+    "useUnifiedTopology": true
+  }
+}

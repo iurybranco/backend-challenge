@@ -1,9 +1,8 @@
-import {Request, Response, Router} from "express";
+import {Router} from "express";
+import ProductsController from "./database/controllers/ProductsController";
 
 const routes = Router()
 
-routes.get("/product", function (req: Request, res: Response) {
-    return res.status(200).json({"status": "success"})
-})
+routes.get("/product", ProductsController.getAll)
 
 export default routes
