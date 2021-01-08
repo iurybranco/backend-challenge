@@ -1,0 +1,1 @@
+[{  "_id": 1,  "price_in_cents": 1500,  "title": "soap",  "description": "a smelly soap to take a shower",  "discount": {    "percentage": 0.00,    "value_in_cents": 0  }}]
