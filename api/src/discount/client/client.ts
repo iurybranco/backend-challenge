@@ -20,6 +20,7 @@ export default class Client implements IClient {
             this.client.calculate(req, (error, resp) => {
                 if (error) {
                     reject(error)
+                    return
                 }
                 let discount = new Discount()
                 discount.percentage = resp.getPercentage()

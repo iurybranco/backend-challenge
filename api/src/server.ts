@@ -4,11 +4,16 @@ import './database/connection'
 import routes from "./routes"
 import * as http from 'http';
 import errorHandler from "./errors/handler";
+import "dotenv-safe"
+import morgan from "morgan"
 
 const app = express()
 const server = http.createServer(app)
 app.use(express.json())
 app.use(routes)
 app.use(errorHandler)
-
-server.listen(3333)
+app.use(morgan('dev'))
+let port = process.env.SERVER_PORT ? process.env.SERVER_PORT : 3000
+console.log(`Listening on ${port}`);
+server.listen(port)
+export default server

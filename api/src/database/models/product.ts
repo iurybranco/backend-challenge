@@ -6,7 +6,7 @@ export default class Product {
     @ObjectIdColumn()
     _id: number
     @Column()
-    price_in_cents: string
+    price_in_cents: number
     @Column()
     title: string
     @Column()

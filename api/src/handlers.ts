@@ -3,7 +3,6 @@ import {IProductsRepository, IUsersRepository} from "./database/repositories/int
 import HttpStatus from "http-status-codes"
 import jsend from "jsend"
 import {IClient} from "./discount/client/interfaces";
-import {ServiceError} from "@grpc/grpc-js";
 
 export default class Handlers {
     private grpcClient: IClient;
@@ -17,17 +16,22 @@ export default class Handlers {
     }
 
     async GetProductsHandler(req: Request, res: Response) {
-        let userId = req.query.userId
-        if (!userId) {
-            return res.status(HttpStatus.BAD_REQUEST).json(jsend.fail({"userId": "userId is a required query param"}))
-        }
         let products = await this.productsRepository.getAll()
-        let user = await this.usersRepository.get(1)
-        this.grpcClient.calculate(1,1).then(discount =>{
-            return res.status(HttpStatus.OK).json(jsend.success(discount))
-        }).catch((err: ServiceError)=>{
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(jsend.error(err.message))
-        })
+        let userId = req.query.userId
+        if (userId) {
+            // @ts-ignore
+            let user = await this.usersRepository.get(parseInt(userId))
+            if (user) {
+                await Promise.all(products.map(async product => {
+                    await this.grpcClient.calculate(1, user._id).then(discount => {
+                        product.discount = discount
+                    }).catch(() => {
+                    })
+                }))
+                return res.status(HttpStatus.OK).json(jsend.success(products))
+            }
+        }
+        return res.status(HttpStatus.OK).json(jsend.success(products))
     }
 
 }
