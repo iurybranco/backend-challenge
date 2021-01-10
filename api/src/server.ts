@@ -11,5 +11,4 @@ app.use(express.json())
 app.use(routes)
 app.use(errorHandler)
 
-
 server.listen(3333)

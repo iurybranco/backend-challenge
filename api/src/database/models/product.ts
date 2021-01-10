@@ -1,5 +1,5 @@
 import {Entity, Column, ObjectIdColumn} from 'typeorm'
-import Discount from "./Discount";
+import Discount from "./discount";
 
 @Entity( "product" )
 export default class Product {
