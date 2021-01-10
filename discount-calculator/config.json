@@ -1,0 +1,13 @@
+{
+  "logLevel": 6,
+  "database": {
+    "host": "localhost",
+    "port": 27017,
+    "database": "challenge",
+    "userCollection": "user",
+    "productCollection": "product",
+    "username": "root",
+    "password": "dummyPass"
+  },
+  "serverPort": 3005
+}
