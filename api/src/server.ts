@@ -9,11 +9,11 @@ import morgan from "morgan"
 
 const app = express()
 const server = http.createServer(app)
+app.use(morgan('dev'))
 app.use(express.json())
 app.use(routes)
 app.use(errorHandler)
-app.use(morgan('dev'))
-let port = process.env.SERVER_PORT ? process.env.SERVER_PORT : 3000
+let port = process.env.SERVER_PORT ? process.env.SERVER_PORT : 3004
 console.log(`Listening on ${port}`);
 server.listen(port)
 export default server

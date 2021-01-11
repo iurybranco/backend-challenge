@@ -24,5 +24,4 @@ export function ServeMockDiscountServer(port: number): void {
         console.log(`Listening on ${port}`);
         server.start();
     });
-
 }

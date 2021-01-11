@@ -10,8 +10,9 @@ chai.should();
 
 describe("test get products", () => {
     before(async () => {
-        await createConnection()
-        ServeMockDiscountServer(3000)
+        const config = getMockDbConfig();
+        await createConnection(config)
+        ServeMockDiscountServer(3005)
     });
     it("should get all products from a existent user", (done) => {
         chai.request(app)
@@ -110,4 +111,25 @@ function getProductsWithDiscountMock(): Product[] {
             }
         }
     ]
+}
+
+function getMockDbConfig() {
+    const config: any = {
+        "type": "mongodb",
+        "host": "mongo.service.com.br",
+        "database": "challenge",
+        "username": "root",
+        "port": 27017,
+        "password": "dummyPass",
+        "timezone": "Z",
+        "entities": [
+            "./src/database/models/*.ts",
+            "./dist/database/models/*.js"
+        ],
+        "extra": {
+            "authSource": "admin",
+            "useUnifiedTopology": true
+        }
+    }
+    return config;
 }

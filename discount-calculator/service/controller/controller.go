@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/iurybranco/backend-challenge/discount-calculator/service/clock"
 	"github.com/iurybranco/backend-challenge/discount-calculator/service/database"
 	"github.com/iurybranco/backend-challenge/discount-calculator/service/database/documents"
 	"github.com/pkg/errors"
@@ -21,7 +22,7 @@ func New(dbClient database.Client) Controller {
 }
 
 // IT CALCULATES A PRODUCT DISCOUNT
-func (c *controller) Calculate(currentDate time.Time, userId, productId int32) (*documents.Discount, error) {
+func (c *controller) Calculate(userId, productId int32) (*documents.Discount, error) {
 	user, err := c.dbClient.GetUser(userId)
 	if err != nil {
 		if err == database.ErrNoDocuments {
@@ -36,6 +37,7 @@ func (c *controller) Calculate(currentDate time.Time, userId, productId int32) (
 		}
 		return nil, errors.Wrap(err, "failed to get product from database")
 	}
+	currentDate := clock.Now()
 	if c.isBlackFriday(currentDate) {
 		return NewDiscount(10.00, product.PriceInCents), nil
 	}

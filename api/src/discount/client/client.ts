@@ -7,16 +7,16 @@ import Discount from "../../database/models/discount";
 export default class Client implements IClient {
     private client: DiscountClient
 
-    constructor(port: number) {
+    constructor(host: string, port: number) {
         this.client = new DiscountClient(
-            `localhost:${port}`,
+            `${host}:${port}`,
             grpc.credentials.createInsecure()
         );
     }
 
     calculate(product_id: number, user_id: number): Promise<Discount> {
         return new Promise<Discount>((resolve, reject) => {
-            let req = new Request().setUserId(product_id).setUserId(user_id)
+            let req = new Request().setProductId(product_id).setUserId(user_id)
             this.client.calculate(req, (error, resp) => {
                 if (error) {
                     reject(error)

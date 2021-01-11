@@ -7,6 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"time"
 )
 
 var ErrNoDocuments = mongo.ErrNoDocuments
@@ -37,7 +38,8 @@ func New(config Config) (Client, error) {
 }
 
 func (c *client) GetUser(id int32) (*documents.User, error) {
-	result := c.userCollection.FindOne(context.Background(), bson.M{"_id": id})
+	ctx, _ := context.WithTimeout(context.Background(), 2*time.Second)
+	result := c.userCollection.FindOne(ctx, bson.M{"_id": id})
 	var user documents.User
 	if err := result.Decode(&user); err != nil {
 		return nil, err
@@ -46,7 +48,8 @@ func (c *client) GetUser(id int32) (*documents.User, error) {
 }
 
 func (c *client) GetProduct(id int32) (*documents.Product, error) {
-	result := c.productCollection.FindOne(context.Background(), bson.M{"_id": id})
+	ctx, _ := context.WithTimeout(context.Background(), 2*time.Second)
+	result := c.productCollection.FindOne(ctx, bson.M{"_id": id})
 	var product documents.Product
 	if err := result.Decode(&product); err != nil {
 		return nil, err

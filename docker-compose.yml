@@ -8,8 +8,40 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: "root"
       MONGO_INITDB_ROOT_PASSWORD: "dummyPass"
+    volumes:
+      - ./dump:/dump
+      - ./db_seed.sh:/db_seed.sh
+    networks:
+      back:
+        aliases:
+          - "mongo.service.com.br"
 
-  mongo_seed:
-    build: ./mongo-seed
-    links:
+  api:
+    build: ./api
+    environment:
+      SERVER_PORT: "3001"
+      GRPC_SERVER_HOST: "discount.calculator.service.com.br"
+      GRPC_SERVER_PORT: "3002"
+    ports:
+      - "3001:3001"
+    depends_on:
       - mongodb
+      - discount-calculator
+    restart: always
+    networks:
+      back:
+
+  discount-calculator:
+    build: ./discount-calculator
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mongodb
+    restart: always
+    networks:
+      back:
+        aliases:
+          - "discount.calculator.service.com.br"
+
+networks:
+  back:

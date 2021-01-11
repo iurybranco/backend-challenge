@@ -9,7 +9,6 @@ import (
 	. "github.com/onsi/gomega"
 	"google.golang.org/grpc"
 	"testing"
-	"time"
 )
 
 func TestServer(t *testing.T) {
@@ -24,7 +23,7 @@ func TestServer(t *testing.T) {
 	defer conn.Close()
 	client := discount.NewDiscountClient(conn)
 	t.Run("It calculates a discount", func(t *testing.T) {
-		cntroller.calculateFunc = func(currentDate time.Time, userId, productId int32) (*documents.Discount, error) {
+		cntroller.calculateFunc = func(userId, productId int32) (*documents.Discount, error) {
 			Expect(userId).Should(BeEquivalentTo(1))
 			Expect(productId).Should(BeEquivalentTo(1))
 			return &documents.Discount{
@@ -42,7 +41,7 @@ func TestServer(t *testing.T) {
 		Expect(resp.ValueInCents).Should(BeEquivalentTo(100))
 	})
 	t.Run("It calculates a discount with user not found", func(t *testing.T) {
-		cntroller.calculateFunc = func(currentDate time.Time, userId, productId int32) (*documents.Discount, error) {
+		cntroller.calculateFunc = func(userId, productId int32) (*documents.Discount, error) {
 			Expect(userId).Should(BeEquivalentTo(1))
 			Expect(productId).Should(BeEquivalentTo(1))
 			return nil, controller.ErrUserNotFound
@@ -56,7 +55,7 @@ func TestServer(t *testing.T) {
 		Expect(resp).Should(BeNil())
 	})
 	t.Run("It calculates a discount with product not found", func(t *testing.T) {
-		cntroller.calculateFunc = func(currentDate time.Time, userId, productId int32) (*documents.Discount, error) {
+		cntroller.calculateFunc = func(userId, productId int32) (*documents.Discount, error) {
 			Expect(userId).Should(BeEquivalentTo(1))
 			Expect(productId).Should(BeEquivalentTo(1))
 			return nil, controller.ErrProductNotFound
@@ -70,7 +69,7 @@ func TestServer(t *testing.T) {
 		Expect(resp).Should(BeNil())
 	})
 	t.Run("It calculates a discount with failure", func(t *testing.T) {
-		cntroller.calculateFunc = func(currentDate time.Time, userId, productId int32) (*documents.Discount, error) {
+		cntroller.calculateFunc = func(userId, productId int32) (*documents.Discount, error) {
 			Expect(userId).Should(BeEquivalentTo(1))
 			Expect(productId).Should(BeEquivalentTo(1))
 			return nil, errors.New("failed")
@@ -86,9 +85,9 @@ func TestServer(t *testing.T) {
 }
 
 type MockController struct {
-	calculateFunc func(currentDate time.Time, userId, productId int32) (*documents.Discount, error)
+	calculateFunc func(userId, productId int32) (*documents.Discount, error)
 }
 
-func (m *MockController) Calculate(currentDate time.Time, userId, productId int32) (*documents.Discount, error) {
-	return m.calculateFunc(currentDate, userId, productId)
+func (m *MockController) Calculate(userId, productId int32) (*documents.Discount, error) {
+	return m.calculateFunc(userId, productId)
 }

@@ -3,6 +3,7 @@ import {IProductsRepository, IUsersRepository} from "./database/repositories/int
 import HttpStatus from "http-status-codes"
 import jsend from "jsend"
 import {IClient} from "./discount/client/interfaces";
+import Product from "./database/models/product";
 
 export default class Handlers {
     private grpcClient: IClient;
@@ -22,13 +23,14 @@ export default class Handlers {
             // @ts-ignore
             let user = await this.usersRepository.get(parseInt(userId))
             if (user) {
-                await Promise.all(products.map(async product => {
-                    await this.grpcClient.calculate(1, user._id).then(discount => {
+                let updatedProducts: Product[] = await Promise.all(products.map(async (product: Product): Promise<Product> => {
+                    await this.grpcClient.calculate(product._id, user._id).then(discount => {
                         product.discount = discount
                     }).catch(() => {
                     })
+                    return product
                 }))
-                return res.status(HttpStatus.OK).json(jsend.success(products))
+                return res.status(HttpStatus.OK).json(jsend.success(updatedProducts))
             }
         }
         return res.status(HttpStatus.OK).json(jsend.success(products))

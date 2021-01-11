@@ -1,7 +1,7 @@
 {
   "logLevel": 6,
   "database": {
-    "host": "localhost",
+    "host": "mongo.service.com.br",
     "port": 27017,
     "database": "challenge",
     "userCollection": "user",
@@ -9,5 +9,5 @@
     "username": "root",
     "password": "dummyPass"
   },
-  "serverPort": 3005
+  "serverPort": 3002
 }
