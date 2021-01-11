@@ -46,7 +46,7 @@ Example:
 
 ##### Response
 
-+ **Success** 201
++ **Success** 200
 
 ```json
 {
