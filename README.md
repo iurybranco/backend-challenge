@@ -13,7 +13,7 @@
 
 #### Project Architecture
 
-![alt text](https://github.com/iurybranco/backend-challenge/blob/master/arch.png?raw=true "Project Architecture")
+![alt text](https://github.com/iurybranco/backend-challenge/blob/main/arch.png?raw=true "Project Architecture")
 
 **api**: Responsible for receiving requests to get products list. Calling discount-calculator service through gRPC, to applicable discounts.
 
