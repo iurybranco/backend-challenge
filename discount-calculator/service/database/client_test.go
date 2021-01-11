@@ -35,7 +35,7 @@ func TestGettingAExistentProduct(t *testing.T) {
 	product, err := client.GetProduct(1)
 	Expect(err).Should(BeNil())
 	Expect(product.Id).Should(BeEquivalentTo(1))
-	Expect(product.PriceInCents).Should(BeEquivalentTo(1500))
+	Expect(product.PriceInCents).Should(BeEquivalentTo(150))
 	Expect(product.Title).Should(BeEquivalentTo("Soap"))
 	Expect(product.Description).Should(BeEquivalentTo("A smelly soap to take a shower"))
 	Expect(product.Discount.Percentage).Should(BeEquivalentTo(0))

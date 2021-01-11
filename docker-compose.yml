@@ -10,7 +10,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: "dummyPass"
     volumes:
       - ./dump:/dump
-      - ./db_seed.sh:/db_seed.sh
     networks:
       back:
         aliases:
@@ -22,6 +21,11 @@ services:
       SERVER_PORT: "3001"
       GRPC_SERVER_HOST: "discount.calculator.service.com.br"
       GRPC_SERVER_PORT: "3002"
+      DB_USER: "root"
+      DB_PASS: "dummyPass"
+      DB_HOST: "mongo.service.com.br"
+      DB_DATABASE: "challenge"
+      DB_PORT: "27017"
     ports:
       - "3001:3001"
     depends_on:

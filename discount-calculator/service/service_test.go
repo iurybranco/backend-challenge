@@ -39,7 +39,7 @@ func TestService(t *testing.T) {
 		resp, err := client.Calculate(context.Background(), req)
 		Expect(err).ShouldNot(HaveOccurred())
 		Expect(resp.Percentage).Should(BeEquivalentTo(10.00))
-		Expect(resp.ValueInCents).Should(BeEquivalentTo(150))
+		Expect(resp.ValueInCents).Should(BeEquivalentTo(15))
 	})
 	t.Run("It calculates a birthday discount to a user", func(t *testing.T) {
 		clock.SetFakeTimeNow(func() time.Time {
@@ -50,7 +50,7 @@ func TestService(t *testing.T) {
 		resp, err := client.Calculate(context.Background(), req)
 		Expect(err).ShouldNot(HaveOccurred())
 		Expect(resp.Percentage).Should(BeEquivalentTo(05.00))
-		Expect(resp.ValueInCents).Should(BeEquivalentTo(75))
+		Expect(resp.ValueInCents).Should(BeEquivalentTo(7))
 	})
 	t.Run("It calculates a birthday and black friday discount to a user", func(t *testing.T) {
 		clock.SetFakeTimeNow(func() time.Time {
@@ -61,7 +61,7 @@ func TestService(t *testing.T) {
 		resp, err := client.Calculate(context.Background(), req)
 		Expect(err).ShouldNot(HaveOccurred())
 		Expect(resp.Percentage).Should(BeEquivalentTo(10.00))
-		Expect(resp.ValueInCents).Should(BeEquivalentTo(150))
+		Expect(resp.ValueInCents).Should(BeEquivalentTo(15))
 	})
 }
 
@@ -77,6 +77,6 @@ func getMockConfig() *Config {
 			Username:          "root",
 			Password:          "dummyPass",
 		},
-		ServerPort: 3002,
+		ServerPort: 3006,
 	}
 }

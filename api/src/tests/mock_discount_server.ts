@@ -6,7 +6,7 @@ import {Request, Response} from "../discount/proto/discount_pb";
 // @ts-ignore
 class MockDiscountServer implements IDiscountServer {
     calculate(call: grpc.ServerUnaryCall<Request, Response>, callback: sendUnaryData<Response>) {
-        let response = new Response().setPercentage(12).setValueInCents(1000)
+        let response = new Response().setPercentage(10).setValueInCents(100)
         callback(null, response);
     }
 

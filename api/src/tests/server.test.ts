@@ -67,7 +67,7 @@ function getProductsWithoutDiscountMock(): Product[] {
     return [
         {
             "_id": 1,
-            "price_in_cents": 1500,
+            "price_in_cents": 150,
             "title": "Soap",
             "description": "A smelly soap to take a shower",
             "discount": {
@@ -77,7 +77,7 @@ function getProductsWithoutDiscountMock(): Product[] {
         },
         {
             "_id": 2,
-            "price_in_cents": 7000,
+            "price_in_cents": 700,
             "title": "Soda",
             "description": "The best soda ever",
             "discount": {
@@ -92,22 +92,22 @@ function getProductsWithDiscountMock(): Product[] {
     return [
         {
             "_id": 1,
-            "price_in_cents": 1500,
+            "price_in_cents": 150,
             "title": "Soap",
             "description": "A smelly soap to take a shower",
             "discount": {
-                "percentage": 12.00,
-                "value_in_cents": 1000
+                "percentage": 10.00,
+                "value_in_cents": 100
             }
         },
         {
             "_id": 2,
-            "price_in_cents": 7000,
+            "price_in_cents": 700,
             "title": "Soda",
             "description": "The best soda ever",
             "discount": {
-                "percentage": 12.00,
-                "value_in_cents": 1000
+                "percentage": 10.00,
+                "value_in_cents": 100
             }
         }
     ]
