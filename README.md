@@ -72,7 +72,7 @@ Example:
   }]
 } 
 ``` 
-+ **Fail** 500
++ **Error** 500
 
 ```json
 {
